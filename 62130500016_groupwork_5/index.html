@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Vue Js - HelloWorld App</title>
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+  <!-- Using via Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+</head>
+
+<style>
+
+</style>
+
+<body>
+  <div id="app">
+    <div class="h-full bg-blue-100">
+      <div class="container flex justify-center py-20">
+        <div class="p-3 w-auto bg-white rounded-xl max-w-lg hover:shadow">
+          <div class="flex justify-between w-full"> <img
+              src="https://scontent.fbkk2-6.fna.fbcdn.net/v/t1.0-9/134730615_3626118044090781_5345320992294946255_n.jpg?_nc_cat=104&ccb=2&_nc_sid=09cbfe&_nc_eui2=AeGwW7xo4_nReJFl-DCkUcCcjmEbjREGUYWOYRuNEQZRhdpKQIUWOLevf32Y9e4Cva_ff2d_1vtPkWGNxaxIQCeO&_nc_ohc=iTx37Q-hXcgAX9IPQtF&_nc_ht=scontent.fbkk2-6.fna&oh=778dd612c9f4768f85d1287a330262d4&oe=603FBE84"
+              width="150" class="rounded-lg">
+            <div class="ml-2">
+              <div class="p-3">
+                <h3 class="text-2xl">guyjiraphat</h3> <span class="text-gray-400">Personal blog</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-gray-200 rounded-lg">
+                <div class="mr-3"> <span class="text-gray-400 block">Posts</span> <span
+                    class="font-bold text-black text-xl">3</span> </div>
+                <div class="mr-3"> <span class="text-gray-400 block">Followers</span> <span
+                    class="font-bold text-black text-xl">2.7M</span> </div>
+                <div> <span class="text-gray-400 block">Following</span> <span
+                    class="font-bold text-black text-xl">327</span> </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center items-center mt-2 gap-2 w-full">
+            <a href="https://www.instagram.com/guyjiraphat/" class="w-full">
+              <button
+                class="flex justify-center items-center h-9 w-full mt-2 rounded-md bg-blue-700 text-white text-md hover:shadow hover:bg-blue-800">Follow
+              </button>
+            </a>
+          </div>
+          <br>
+          <h1 class="text-xl tracking-wider mt-5 inline">Photo Gallery </h1>
+          <h1 class="inline text-gray-400">Like ( {{ countdone }} ) </h1>
+
+          <!-- Big Picture JA -->
+          <div class="h-96 max-w-xl bg-black flex justify-center" v-show="isBigPicture">
+            <img :src="bigPictureSrc" class="h-96">
+            <div @click="isBigPicture=false" class="w-8 h-8 absolute bg-red-400 mt-3.5 ml-72 "></div>
+          </div>
+
+          <!-- search -->
+
+          <div id="search-bar" class="mt-5">
+            <span class="material-icons text-xl cursor-pointer" v-show="!searchbutton" @click="searchBarToggle">search
+            </span>
+            <div v-show="searchbutton"><input type="text" placeholder="Search the photo" v-model="searchText"
+                class="border border-gray-500 shadow " @keyup.enter="search">
+              <button @click="searchBarToggle"
+                class="ml-2 inline shadow text-white bg-blue-500 rounded-sm w-16 h-7 hover:bg-blue-700">Cancel</button>
+            </div>
+          </div>
+          <div v-if="searched.length !== 0" v-for="(task,index) in searched" class="rounded-lg">
+            <ul>
+              <li class="py-3.5 space-x-6 items-center rounded-lg">
+                <div class="rounded-lg inline"><img v-bind:src="task.image" alt="task.title" class="h-48 py-3 inline "
+                    @click="bigPic(index)">
+                </div>
+
+                <span class="text-gray-700 font-semibold text-sm inline">{{task.title}} </span>
+                <span v-show="!task.done" v-on:click="toggleDone(index)"
+                  class="material-icons text-red-500 align-middle cursor-pointer">favorite_border</span>
+                <span v-show="task.done" v-on:click="toggleDone(index)"
+                  class="material-icons text-red-500 align-middle cursor-pointer">favorite</span>
+              </li>
+            </ul>
+          </div>
+          <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center">
+            <h2 class="mb-2 text-2xl font-bold text-gray-800">No Photos.</h2>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- my main.js -->
+  <script src="main.js"></script>
+</body>
+
+</html>

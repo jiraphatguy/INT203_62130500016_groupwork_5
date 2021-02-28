@@ -57,43 +57,16 @@
           <h1 class="text-xl tracking-wider mt-5 inline">Photo Gallery </h1>
           <h1 class="inline text-gray-400">Like ( {{ countdone }} ) </h1>
 
-          <!-- Big Picture JA -->
-          <div class="h-96 max-w-xl bg-black flex justify-center" v-show="isBigPicture">
-            <img :src="bigPictureSrc" class="h-96">
-            <div @click="isBigPicture=false" class="w-8 h-8 absolute bg-red-400 mt-3.5 ml-72 "></div>
-          </div>
+          <photo-search @when-search="search" @when-search-toggle="searchBarToggle" :searchtex="searchText" :searchbutton="searchbutton"></photo-search>
 
-          <!-- search -->
+          <photo-view :isbigpicture="isBigPicture" :bigpicturesrc="bigPictureSrc" @close="close"></photo-view>
 
-          <div id="search-bar" class="mt-5">
-            <span class="material-icons text-xl cursor-pointer" v-show="!searchbutton" @click="searchBarToggle">search
-            </span>
-            <div v-show="searchbutton"><input type="text" placeholder="Search the photo" v-model="searchText"
-                class="border border-gray-500 shadow " @keyup.enter="search">
-              <button @click="searchBarToggle"
-                class="ml-2 inline shadow text-white bg-blue-500 rounded-sm w-16 h-7 hover:bg-blue-700">Cancel</button>
-            </div>
-          </div>
           <div v-if="searched.length !== 0" v-for="(task,index) in searched" class="rounded-lg">
-            <ul>
-              <li class="py-3.5 space-x-6 items-center rounded-lg">
-                <div class="rounded-lg inline"><img v-bind:src="task.image" alt="task.title" class="h-48 py-3 inline "
-                    @click="bigPic(index)">
-                </div>
-
-                <span class="text-gray-700 font-semibold text-sm inline">{{task.title}} </span>
-                <span v-show="!task.done" v-on:click="toggleDone(index)"
-                  class="material-icons text-red-500 align-middle cursor-pointer">favorite_border</span>
-                <span v-show="task.done" v-on:click="toggleDone(index)"
-                  class="material-icons text-red-500 align-middle cursor-pointer">favorite</span>
-              </li>
-            </ul>
+            <photo-item :index="index" :task="task" @when-big="bigPic" @when-toggle="toggleDone"></photo-item>
           </div>
           <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center">
             <h2 class="mb-2 text-2xl font-bold text-gray-800">No Photos.</h2>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -102,6 +75,13 @@
 
   <!-- my main.js -->
   <script src="main.js"></script>
+  <script src="components/PhotoItem.js"></script>
+  <script src="components/PhotoSearch.js"></script>
+  <script src="components/PhotoView.js"></script>
+  <script>
+    app.mount('#app')
+  </script>
 </body>
+
 
 </html>
